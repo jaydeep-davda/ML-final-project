@@ -4,9 +4,8 @@ import matplotlib.pyplot as plt
 # -----------------------------
 # Nutrition Database (Rule Based)
 # -----------------------------
-# Expanded global nutrition table with more items
-nutrition_table = {
-    # Italian
+nutrition_db = {
+ # Italian
     "Pizza": {"Calories": 285, "Protein": 12, "Carbs": 36, "Fat": 10},
     "Pasta": {"Calories": 310, "Protein": 11, "Carbs": 42, "Fat": 9},
     "Risotto": {"Calories": 320, "Protein": 8, "Carbs": 45, "Fat": 10},
@@ -76,26 +75,41 @@ st.write("This system predicts food type and displays its nutritional values.")
 # -----------------------------
 food = st.selectbox(
     "Select a food item",
-    ["pizza", "burger", "salad", "pasta"]
+    ["pizza", "burger", "salad", "pasta", "Risotto", "Lasagna", 
+     "Caprese Salad", "Fried Chicken", "French Fries", "Mac and Cheese",
+     "Hot Dog", "Sushi", "Ramen", "Tempura", "Miso Soup", "Onigiri", "Tacos",
+    "Burrito", "Quesadilla", "Nachos", "Guacamole", "Butter Chicken",
+     "Paneer Tikka", "Dal Makhani", "Chole", "Biryani", "Bratwurst", 
+     "Sauerbraten", "Pretzel", "Kartoffelsalat", "Wiener Schnitzel", 
+     "Ice Cream", "Chocolate Cake", "Smoothie", "Brownie", "Cookies",
+     "Steak", "Omelette", "Grilled Fish", "Quinoa Bowl"]
 )
 
 # -----------------------------
 # Button
 # -----------------------------
 if st.button("Predict Nutrition"):
-
+    
     nutrition = nutrition_db[food]
-
+    
     st.subheader("Predicted Food:")
     st.write(food.capitalize())
-
+    
     st.subheader("Nutritional Values:")
     st.write("Calories:", nutrition["calories"], "kcal")
     st.write("Protein:", nutrition["protein"], "g")
     st.write("Carbohydrates:", nutrition["carbs"], "g")
     st.write("Fat:", nutrition["fat"], "g")
-
+    
     # -----------------------------
     # Bar Chart
     # -----------------------------
     labels = nutrition.keys()
+    values = nutrition.values()
+    
+    fig, ax = plt.subplots()
+    ax.bar(labels, values)
+    ax.set_title("Macronutrient Breakdown")
+    ax.set_ylabel("Amount")
+    
+    st.pyplot(fig)
