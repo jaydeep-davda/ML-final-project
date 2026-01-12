@@ -53,24 +53,29 @@ st.set_page_config(page_title="Food Recognition & Nutrition Estimator")
 st.title("Food Recognition & Nutrition Estimator")
 st.write("This system predicts food type and displays its nutritional values.")
 
-food = st.selectbox("Select a food item", list(nutrition_db.keys()))
+# Add placeholder so nothing is selected by default
+food_options = ["-- Select a food item --"] + list(nutrition_db.keys())
+food = st.selectbox("Select a food item", food_options)
 
 if st.button("Predict Nutrition"):
-    nutrition = nutrition_db[food]
+    if food == "-- Select a food item --":
+        st.warning("Please select a food item first.")
+    else:
+        nutrition = nutrition_db[food]
 
-    st.subheader("Predicted Food:")
-    st.write(food)
+        st.subheader("Predicted Food:")
+        st.write(food)
 
-    st.subheader("Nutritional Values:")
-    st.write("Calories:", nutrition["Calories"], "kcal")
-    st.write("Protein:", nutrition["Protein"], "g")
-    st.write("Carbohydrates:", nutrition["Carbs"], "g")
-    st.write("Fat:", nutrition["Fat"], "g")
+        st.subheader("Nutritional Values:")
+        st.write("Calories:", nutrition["Calories"], "kcal")
+        st.write("Protein:", nutrition["Protein"], "g")
+        st.write("Carbohydrates:", nutrition["Carbs"], "g")
+        st.write("Fat:", nutrition["Fat"], "g")
 
-    # Bar chart
-    fig, ax = plt.subplots()
-    ax.bar(nutrition.keys(), nutrition.values())
-    ax.set_title("Macronutrient Breakdown")
-    ax.set_ylabel("Amount")
+        # Bar chart
+        fig, ax = plt.subplots()
+        ax.bar(nutrition.keys(), nutrition.values())
+        ax.set_title("Macronutrient Breakdown")
+        ax.set_ylabel("Amount")
 
-    st.pyplot(fig)
+        st.pyplot(fig)
